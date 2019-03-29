@@ -1,0 +1,2 @@
+animalZChicken,entityclasses,Entity,KgNone,ZChicken,ZPoulet,ZHuhn,,ZPollo,
+animalZDireWolf,entityclasses,Entity,KgNone,ZDireWolf,ZDireWolf,ZDireWolf,,ZDireWolf,
