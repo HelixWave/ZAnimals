@@ -1,0 +1,10 @@
+<configs>
+ <!-- Decrease likliehood of invisibleAnimal -->
+<set xpath="/entitygroups/entitygroup[@name='FriendlyAnimalsForest']/entity[@name='invisibleAnimal']/@prob">2</set>
+<!-- add attributes to the entitygroups that exist already for ZChicken and ZDireWolf need for tags contain zombie or animal hostile-->
+<append xpath="/entitygroups/*" >
+		<entity name="animalZChicken"/>
+    <entity name="animalZDireWolf"/>
+</append>
+
+</configs>
