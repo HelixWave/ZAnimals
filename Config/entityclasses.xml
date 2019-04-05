@@ -4,7 +4,7 @@
     	<property name="Tags" value="entity,animal,zombie,hostile"/>
     	<property name="Mesh" value="Animals/CHICKEN/chickenPrefab"/>
     	<property name="Prefab" value="NPC"/>
-      <property name="ReplaceMaterial1" value="entities/animals/wolf/materials/wolfEyeFeral"/>
+      <property name="ReplaceMaterial0" value="entities/zombies/materials/feral_radiated"/>
     	<property name="Class" value="EntityZombieCop"/>
     	<property name="Parent" value="Animals"/>
     	<property name="Faction" value="animals"/>
@@ -69,8 +69,9 @@
     <entity_class name="animalZDireWolf" extends="animalWolf">
     	<property name="Tags" value="entity,animal,zombie,hostile"/>
     	<property name="Prefab" value="/Entities/Animals/Wolf/animalStandardDogZombieRagdoll"/>
+      <property name="ReplaceMaterial0" value="entities/zombies/materials/feral_radiated"/>
     	<property name="Class" value="EntityZombieDog"/>
-      <property name="SizeScale" value="2"/>
+      <property name="SizeScale" value="1.5"/>
     	<property name="SoundRandomTime" value="45.0"/>
     	<property name="SoundAlertTime" value="25.0"/>
     	<property name="SoundRandom" value="Enemies/Zombie_Dogs/zombiedogroam"/>
@@ -80,6 +81,7 @@
     	<property name="SoundAttack" value="Enemies/Zombie_Dogs/zombiedogattack"/>
     	<property name="SoundSense" value="Enemies/Zombie_Dogs/zombiedogsense"/>
     	<property name="SoundGiveUp" value="Enemies/Zombie_Dogs/zombiedoggiveup"/>
+
     	<property name="AITask-1" value="BreakBlock"/>
     	<property name="AITask-2" value="Territorial"/>
     	<property name="AITask-3" value="ApproachAndAttackTarget" param1="EntityPlayer,20,EntityNPC,20"/>
@@ -92,37 +94,95 @@
     	<property name="AITarget-3" value="SetNearestCorpseAsTarget" param1="EntityPlayer"/>
     	<property name="AITarget-4" value="SetNearestEntityAsTarget" param1="EntityPlayer,0,EntityNPC,0"/>
     	<property name="AITarget-5" value=""/>
-      <property name="LootDropEntityClass" value="EntityLootContainerStrong"/>
+
     	<!-- Stealth -->
     	<property name="SleeperSmellSenseThreshold" value="5,30"/> <!-- Indiv.Random. smell capability - "I smell something" player smell value -->
     	<property name="SleeperSmellWakeThreshold" value="10,40"/>
     	<property name="SmellAlertThreshold" value="5"/> <!-- for awake zombies -->
-      <property name="SightRange" value="70"/>
+
     	<!-- Gameplay -->
     	<property name="MoveSpeed" value="0.5"/>
     	<property name="MoveSpeedNight" value="0.3"/>
     	<property name="MoveSpeedAggro" value="1.6, 1.6"/>
     	<property name="MoveSpeedPanic" value="1.6"/>
-      <property name="ExperienceGain" value="1100"/>
-    	<property name="HandItem" value="meleeHandAnimalZombieDogFeral"/>
+
+    	<property name="HandItem" value="meleeHandAnimalZombieDog"/>
 
     	<property name="Immunity" value="sickness;disease;wellness"/> <!-- bleeding; -->
-
+      <property name="ExperienceGain" value="1000"/>
     	<drop event="Harvest" name="foodRawMeat" count="0" tool_category="Butcher"/>
-    	<drop event="Harvest" name="foodRottingFlesh" tag="butcherHarvest" count="8"/> <!-- animalZombieDog -->
-    	<drop event="Harvest" name="resourceLeather" tag="butcherHarvest" count="8"/>
-    	<drop event="Harvest" name="resourceAnimalFat" tag="butcherHarvest" count="2"/>
-    	<drop event="Harvest" name="resourceFemur" tag="butcherHarvest" count="8"/>
-    	<drop event="Harvest" name="resourceFemur" tag="allToolsHarvest" count="4"/>
+    	<drop event="Harvest" name="foodRottingFlesh" tag="butcherHarvest" count="4"/> <!-- animalZombieDog -->
+    	<drop event="Harvest" name="resourceLeather" tag="butcherHarvest" count="4"/>
+    	<drop event="Harvest" name="resourceAnimalFat" tag="butcherHarvest" count="1"/>
+    	<drop event="Harvest" name="resourceFemur" tag="butcherHarvest" count="3"/>
+    	<drop event="Harvest" name="resourceFemur" tag="allToolsHarvest" count="1"/>
     	<!-- <drop event="Destroy" name="resourceAnimalFat" tag="butcherHarvest" count="2"/> -->
     	<effect_group name="Base Effects">
-    		<passive_effect name="HealthMax" operation="base_set" value="240"/>
-    		<passive_effect name="HealthMax" operation="perc_set" value="0"/> <!-- Zombie HP scale -->
-        <passive_effect name="EntityDamage" operation="perc_add" value="0"/> <!-- Feral damage -->
-        <triggered_effect trigger="onSelfFirstSpawn" action="ModifyCVar" target="self" cvar="EntityBoss" operation="set" value="1"/>
-        <triggered_effect trigger="onOtherDamagedSelf" action="ModifyCVar" target="self" cvar="RadiatedRegenAmount" operation="set" value="1"/>
-        <triggered_effect trigger="onOtherDamagedSelf" action="AddBuff" target="self" buff="buffRadiatedRegen"/>
+    		<passive_effect name="HealthMax" operation="base_set" value="800"/>
+    		<passive_effect name="HealthMax" operation="perc_set" value="1"/> <!-- Zombie HP scale -->
     	</effect_group>
     </entity_class>
+
+    <entity_class name="animalLilPiggy" extends="animalTemplateHostile">
+    	<property name="Tags" value="entity,animal,hostile"/>
+      <property name="ReplaceMaterial0" value="Entities/Animals/Boar/Materials/GRACE"/>
+      <property name="ReplaceMaterial1" value="Entities/Animals/Boar/Materials/GRACE"/>
+    	<property name="IsEnemyEntity" value="true"/>
+    	<property name="AvatarController" value="AvatarAnimalController"/>
+    	<property name="ModelType" value="Standard"/>
+    	<property name="HasRagdoll" value="true"/>
+    	<property name="PhysicsBody" value="boar"/>
+    	<property name="Mass" value="1200"/>
+    	<property name="Mesh" value="Animals/Boar/AnimalBoarStandardRagdoll"/>
+    	<property name="HasDeathAnim" value="true"/>
+    	<property name="RootMotion" value="true"/>
+    	<property name="RagdollOnDeathChance" value=".5"/>
+    	<property class="MechanimAttackTriggers">
+    		<property name="state0" value="AttackTrigger"/>
+    	</property>
+    	<property class="MechanimAttackStates">
+    		<property name="state0" value="Attack"/>
+    		<property name="state1" value="AttackStandingStill"/>
+    	</property>
+    	<property class="MechanimPainTriggers">
+    		<property name="state0" value="PainTrigger"/>
+    	</property>
+    	<property class="MechanimPainStates">
+    		<property name="state0" value="Pain"/>
+    	</property>
+    	<property class="MechanimDeathTriggers">
+    		<property name="state0" value="DeathTrigger"/>
+    	</property>
+    	<property class="MechanimDeathStates">
+    		<property name="state0" value="Death"/>
+    	</property>
+    	<property name="SoundRandom" value="Animals/Boar/boarroam"/>
+    	<property name="SoundAlert" value="Animals/Boar/boaralert"/>
+    	<property name="SoundHurt" value="Animals/Boar/boarpain"/>
+    	<property name="SoundDeath" value="Animals/Boar/boardeath"/>
+    	<property name="SoundAttack" value="Animals/Boar/boarattack"/>
+    	<property name="SoundSense" value="Animals/Boar/boarsense"/>
+    	<property name="SoundGiveUp" value="Animals/Boar/boargiveup"/>
+      <property name="SizeScale" value=".75"/>
+    	<!-- Gameplay -->
+    	<property name="MoveSpeed" value="0.2"/>
+    	<property name="MoveSpeedAggro" value="1.3, 1.3"/>
+    	<property name="MoveSpeedPanic" value="2.0"/>
+
+    	<property name="HandItem" value="meleeHandAnimalWolf"/>
+      <property name="ExperienceGain" value="1000"/> <!-- XP strong feral -->
+      <drop event="Harvest" name="foodRawMeat" tag="butcherHarvest" count="100"/> <!-- animalBoar -->
+    	<drop event="Harvest" name="resourceLeather" tag="butcherHarvest" count="70"/>
+    	<drop event="Harvest" name="resourceAnimalFat" tag="butcherHarvest" count="60"/>
+    	<drop event="Harvest" name="resourceFemur" tag="butcherHarvest" count="10"/>
+    	<drop event="Harvest" name="resourceFemur" tag="butcherHarvest" count="2"/>
+
+      <effect_group name="Base Effects">
+    		<passive_effect name="HealthMax" operation="base_set" value="900"/>
+    		<passive_effect name="HealthMax" operation="perc_add" value="0"/> <!-- Animal HP scale -->
+    		<passive_effect name="EntityDamage" operation="perc_add" value=".5"/> <!-- Feral damage -->
+    	</effect_group>
+    </entity_class>
+
   </append>
 </configs>
